@@ -1,10 +1,8 @@
 import { useRouter } from "next/router"
-import { signIn, signOut } from "next-auth/react";
 import Head from "next/head";
 import Layout from "@/components/Layout/Layout";
 import Link from "next/link";
 import styles from "../styles/Form.module.css"
-import Image from "next/image";
 
 import {HiAtSymbol, HiFingerPrint} from "react-icons/hi"
 import { useState } from "react";
@@ -12,10 +10,14 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import login_validate from "../../lib/validate";
 
+import {signIn, signOut } from "next-auth/react";
+
 
 export default function LoginPage() {
  
     const [show, setShow] = useState(false);
+    const router = useRouter();
+     
     //Formik Hook
     const formik = useFormik({
       initialValues:{
@@ -27,14 +29,21 @@ export default function LoginPage() {
     });
     console.log(formik.errors)
 
-    async function onSubmit(values){
-      console.log(values);
-    };
+    /**
+     * dangelsfocus@gmail.com
+     * 12345678
+     * 
+     */
 
-    //Google Handler 
-    async function handleGoogleSignin(){
-      signIn('google',{ callbackUrl: 'http://localhost:3000'})
-    }
+    async function onSubmit(values){
+      const status = await signIn('credentials',{
+        redirect: false, 
+        email: values.email,
+        password: values.password,
+        callbackUrl: "/",
+      })
+      if(status.ok) router.push(status.url)
+    };
 
 
   return (

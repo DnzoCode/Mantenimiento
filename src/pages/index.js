@@ -1,10 +1,11 @@
-import { useSession, signOut, getSession} from "next-auth/react"
 import Link from "next/link";
 import { useState } from "react";
+import { useSession, getSession, signOut } from "next-auth/react"
 
 export default function Home() {
 
-  const {data: session}= useSession();
+  const {data: session} = useSession();
+
   const handleSignOut = () =>{
     signOut()
   }
@@ -17,22 +18,6 @@ export default function Home() {
   )
   
 }
-
-/*export const getServerSideProps = async (context)=>{
-  const session = await getSession(context);
-
-  if(!session) return{
-    redirect:{
-      destination: '/login',
-      permantent: false 
-    }
-  }
-  return {
-    props: {
-      session
-    }
-  }
-}*/
 
 
 //Guest
@@ -57,7 +42,6 @@ function User({session, handleSignOut}){
       <h3 className="text-3xl font-bold">Autorized User HomePage</h3>
 
       <div>
-        <h5>{session.user.name}</h5>
         <h5>{session.user.email}</h5>
       </div>
         <div className="flex justify-center">
@@ -71,8 +55,8 @@ function User({session, handleSignOut}){
   )
 }
 
-export async function getServerSideProps(context){
-  const session = await getSession(context);
+export const getServerSideProps= async({ req })=>{
+  const session = await getSession({ req });
 
   if(!session){
     return {
@@ -81,7 +65,7 @@ export async function getServerSideProps(context){
         permanent: false
       }
     }
-  } 
+  }
   return {
     props:{ session }
   }

@@ -19,6 +19,7 @@ function RegisterPage() {
             email:'',
             password: '',
             cpassword: '',
+            rolname:''
         },
         validate: registerValidate,
         onSubmit
@@ -53,7 +54,7 @@ function RegisterPage() {
                     </span>
                 </div>
 
-                <div className={styles.input_group}>
+                <div className={`${styles.input_group} ${formik.errors.email&&formik.touched.email ?  'border-rose-600':''}`}>
                     <input 
                         type="email" 
                         name="email"
@@ -65,9 +66,8 @@ function RegisterPage() {
                       <HiAtSymbol size={25}/>
                     </span>
                 </div>
-                {formik.errors.email&&formik.touched.email ? <span className="text-rose-500">{formik.errors.email}</span> : <></>}
 
-                <div className={styles.input_group}>
+                <div className={`${styles.input_group} ${formik.errors.password&&formik.touched.password ?  'border-rose-600':''}`}>
                     <input 
                         type={`${show.password ? "text" : "password"}`}
                         name="password"
@@ -79,8 +79,8 @@ function RegisterPage() {
                       <HiFingerPrint size={25} title="Ver password"/>
                     </span>
                 </div>
-                {formik.errors.password&&formik.touched.password ? <span className="text-rose-500">{formik.errors.password}</span> : <></>}
-                <div className={styles.input_group}>
+
+                <div className={`${styles.input_group} ${formik.errors.cpassword&&formik.touched.cpassword ?  'border-rose-600':''}`}>
                     <input 
                         type={`${show.cpassword ? "text" : "password"}`}
                         name="cpassword"
@@ -92,8 +92,16 @@ function RegisterPage() {
                       <HiFingerPrint size={25} title="Ver password"/>
                     </span>
                 </div>
-                {formik.errors.cpassword&&formik.touched.cpassword ? <span className="text-rose-500">{formik.errors.cpassword}</span> : <></>}
-
+                <div className={styles.input_group}>
+                    <select name="rolname" id="rolname" className={styles.input_text} {...formik.getFieldProps('rolname')}>
+                        <option value="">Selecciona un rol</option>
+                        <option value="Jefe">Jefe</option>
+                        <option value="Tecnico">Tecnico</option>
+                    </select>
+                    <span className="icon flex items-center px-4">
+                      <HiUser size={25}/>
+                    </span>
+                </div>
                 <div className="input-button">
                     <button className={styles.button} type="submit">
                         Register
