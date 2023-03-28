@@ -1,6 +1,4 @@
 import NextAuth from "next-auth/next";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import clientPromise from "../../../../lib/mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { dbConnect } from "../../../../database/connect";
 import User from "../../../../model/User";
@@ -13,21 +11,28 @@ export default NextAuth({
             async authorize(credentials, req){
                 dbConnect();
 
+                const {email} = credentials;
                 // check user existance 
-                const result = await User.findOne({ email: credentials.email});
+                const user = await User.findOne({ email});
 
-                if(!result) throw new Error("No user Found");
+                if(!user) throw new Error("No user Found");
 
                 // comparar con los datos de la db
-                const checkPassword = await compare(credentials.password, result.password)
+                const checkPassword = await compare(credentials.password, user.password)
 
                 // Incorrect password
-                if(!checkPassword || result.email !== credentials.email){
+                if(!checkPassword || user.email !== credentials.email){
                     throw new Error("Username or password incorrrect");
                 }
 
-                return result;
+                return {
+                    id: user._id,
+                    email: user.email,
+                    username: user.username,
+                    rolname: user.rolname
+                };
             }
         })
-    ]
+    ],
+    secret: "71VUBmeIQJZ5DVWe2oMnHgfdAX4A66CEkemgzER3VtU=",
 })
