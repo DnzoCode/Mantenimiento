@@ -1,7 +1,7 @@
 import { Schema, model, models } from "mongoose";
 
 const userSchema = new Schema({
-    username: {
+    name: {
         type: String,
         trim: true,
     },
@@ -14,7 +14,7 @@ const userSchema = new Schema({
         type: String,
         trim: true,
     },
-    rolname: {
+    role: {
         type: String,
         trim: true
     }

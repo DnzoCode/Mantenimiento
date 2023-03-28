@@ -11,7 +11,7 @@ export default async function handler(req, res){
     
    //Solo Metodo Post
     if(method === "POST"){ 
-        const {username, email, password, rolname}= body;
+        const {name, email, password, role}= body;
 
         //Check usuarios duplicados
         const exist = await User.findOne({email});
@@ -22,10 +22,10 @@ export default async function handler(req, res){
         const hashedPassword = await hash(password, 12)
 
         const user = new User({
-            username,
+            name,
             email,
             password: hashedPassword,
-            rolname,
+            role,
         });
 
         try {

@@ -38,8 +38,8 @@ function Guest(){
 //Authorize user
 
 function User({session, handleSignOut}){
-  const {email, username} = session.user;
 
+const {name, email} = session.user;
 
 
   return(
@@ -47,7 +47,7 @@ function User({session, handleSignOut}){
       <h3 className="text-3xl font-bold">Autorized User HomePage</h3>
 
       <div>
-        <h5>{username}</h5>
+        <h5>{name}</h5>
         <p>{email}</p>
       </div>
         <div className="flex justify-center">

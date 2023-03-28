@@ -17,11 +17,11 @@ function RegisterPage() {
     const router = useRouter();
     const formik = useFormik({
         initialValues:{
-            username: '',
+            name: '',
             email:'',
             password: '',
             cpassword: '',
-            rolname:''
+            role:''
         },
         validate: registerValidate,
         onSubmit
@@ -56,10 +56,10 @@ function RegisterPage() {
                 <div className={styles.input_group}>
                     <input 
                         type="text" 
-                        name="Username" 
-                        placeholder="Username"
+                        name="Name" 
+                        placeholder="Name"
                         className={styles.input_text}
-                        {...formik.getFieldProps('username')}
+                        {...formik.getFieldProps('name')}
                     />
                     <span className="icon flex items-center px-4">
                       <HiUser size={25}/>
@@ -105,7 +105,7 @@ function RegisterPage() {
                     </span>
                 </div>
                 <div className={styles.input_group}>
-                    <select name="rolname" id="rolname" className={styles.input_text} {...formik.getFieldProps('rolname')}>
+                    <select name="role" id="role" className={styles.input_text} {...formik.getFieldProps('role')}>
                         <option value="">Selecciona un rol</option>
                         <option value="Jefe">Jefe</option>
                         <option value="Tecnico">Tecnico</option>
@@ -121,7 +121,7 @@ function RegisterPage() {
                 </div>
             </form>
 
-            <p className="text-center text-gray-400"> Inicia Sesion Aqui <Link className="text-blue-700" href={'/register'}>LogIn</Link> </p>
+            <p className="text-center text-gray-400"> Inicia Sesion Aqui <Link className="text-blue-700" href={'/login'}>LogIn</Link> </p>
         </section>
     </Layout>
     
